@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+             targetNamespace="http://example.com/workflow-demo">
+  <process id="workflowDemoProcess" name="Workflow Demo Process" isExecutable="true" camunda:historyTimeToLive="180">
+    <startEvent id="startEvent" name="Start">
+      <extensionElements>
+        <camunda:executionListener event="start" delegateExpression="#{workflowEventListener}"/>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="flow_start_to_approval" sourceRef="startEvent" targetRef="approvalTask"/>
+
+    <userTask id="approvalTask" name="Approval" camunda:assignee="${approverId}">
+      <extensionElements>
+        <camunda:taskListener event="create" delegateExpression="#{workflowEventListener}"/>
+        <camunda:taskListener event="complete" delegateExpression="#{workflowEventListener}"/>
+      </extensionElements>
+    </userTask>
+
+    <sequenceFlow id="flow_approval_to_gateway" sourceRef="approvalTask" targetRef="approvalGateway"/>
+
+    <exclusiveGateway id="approvalGateway" name="Approval Result"/>
+
+    <sequenceFlow id="flow_gateway_to_manual" sourceRef="approvalGateway" targetRef="manualTask">
+      <conditionExpression xsi:type="tFormalExpression">${approvalResult == 'APPROVED'}</conditionExpression>
+    </sequenceFlow>
+
+    <sequenceFlow id="flow_gateway_to_rejected" sourceRef="approvalGateway" targetRef="rejectedEnd">
+      <conditionExpression xsi:type="tFormalExpression">${approvalResult == 'REJECTED'}</conditionExpression>
+    </sequenceFlow>
+
+    <userTask id="manualTask" name="Manual Completion" camunda:assignee="${executorId}">
+      <extensionElements>
+        <camunda:taskListener event="create" delegateExpression="#{workflowEventListener}"/>
+        <camunda:taskListener event="complete" delegateExpression="#{workflowEventListener}"/>
+      </extensionElements>
+    </userTask>
+
+    <sequenceFlow id="flow_manual_to_end" sourceRef="manualTask" targetRef="completedEnd"/>
+
+    <endEvent id="rejectedEnd" name="Rejected">
+      <extensionElements>
+        <camunda:executionListener event="end" delegateExpression="#{workflowEventListener}"/>
+      </extensionElements>
+    </endEvent>
+
+    <endEvent id="completedEnd" name="Completed">
+      <extensionElements>
+        <camunda:executionListener event="end" delegateExpression="#{workflowEventListener}"/>
+      </extensionElements>
+    </endEvent>
+  </process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_workflowDemoProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_workflowDemoProcess" bpmnElement="workflowDemoProcess">
+      <bpmndi:BPMNShape id="Shape_startEvent" bpmnElement="startEvent">
+        <dc:Bounds x="120" y="200" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_approvalTask" bpmnElement="approvalTask">
+        <dc:Bounds x="220" y="180" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_gateway" bpmnElement="approvalGateway">
+        <dc:Bounds x="370" y="195" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_manualTask" bpmnElement="manualTask">
+        <dc:Bounds x="470" y="180" width="120" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_rejectedEnd" bpmnElement="rejectedEnd">
+        <dc:Bounds x="370" y="320" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_completedEnd" bpmnElement="completedEnd">
+        <dc:Bounds x="640" y="200" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_start_to_approval" bpmnElement="flow_start_to_approval">
+        <di:waypoint x="156" y="218"/>
+        <di:waypoint x="220" y="218"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_approval_to_gateway" bpmnElement="flow_approval_to_gateway">
+        <di:waypoint x="320" y="218"/>
+        <di:waypoint x="370" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway_to_manual" bpmnElement="flow_gateway_to_manual">
+        <di:waypoint x="395" y="195"/>
+        <di:waypoint x="395" y="180"/>
+        <di:waypoint x="470" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_gateway_to_rejected" bpmnElement="flow_gateway_to_rejected">
+        <di:waypoint x="395" y="245"/>
+        <di:waypoint x="395" y="320"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_manual_to_end" bpmnElement="flow_manual_to_end">
+        <di:waypoint x="590" y="220"/>
+        <di:waypoint x="640" y="218"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

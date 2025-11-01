@@ -1,0 +1,36 @@
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-tag.pending {
+  background: rgba(250, 204, 21, 0.18);
+  color: #b45309;
+}
+
+.status-tag.manual {
+  background: rgba(59, 130, 246, 0.18);
+  color: #1d4ed8;
+}
+
+.status-tag.completed {
+  background: rgba(16, 185, 129, 0.18);
+  color: #047857;
+}
+
+.status-tag.rejected {
+  background: rgba(248, 113, 113, 0.18);
+  color: #b91c1c;
+}
+
+.status-tag.neutral {
+  background: rgba(148, 163, 184, 0.2);
+  color: #475569;
+}

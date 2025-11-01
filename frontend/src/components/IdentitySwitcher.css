@@ -1,0 +1,42 @@
+.identity-switcher {
+  display: inline-flex;
+  background: #1e293b;
+  padding: 0.3rem;
+  border-radius: 999px;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  box-shadow: 0 12px 28px rgba(30, 41, 59, 0.35);
+}
+
+.identity-chip {
+  border: none;
+  background: transparent;
+  color: rgba(226, 232, 240, 0.75);
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.identity-chip .hint {
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.85);
+  font-weight: 500;
+}
+
+.identity-chip.active {
+  background: linear-gradient(135deg, #2563eb, #0ea5e9);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.45);
+}
+
+.identity-chip:hover {
+  color: #fff;
+}

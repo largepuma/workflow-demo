@@ -1,0 +1,22 @@
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.eslintcache
+frontend/.parcel-cache/
+
+# Java / backend
+backend/target/
+backend/.m2/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.properties
+
+# IDE / editor
+.idea/
+.vscode/
+*.iml
+
+# OS / misc
+.DS_Store
+Thumbs.db
+logs/
+*.log

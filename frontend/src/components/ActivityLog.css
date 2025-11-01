@@ -1,0 +1,49 @@
+.panel {
+  background: var(--surface, #0f172a);
+  color: #e2e8f0;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.45);
+}
+
+.panel-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.panel-subtitle {
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.7);
+}
+
+.log-container {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.log-line {
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
+}
+
+.log-time {
+  color: #60a5fa;
+  margin-right: 0.5rem;
+}
+
+.log-empty {
+  font-style: italic;
+  color: rgba(226, 232, 240, 0.65);
+}
